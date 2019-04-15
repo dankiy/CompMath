@@ -1,6 +1,6 @@
 import numpy as np
 
 def Generate(n):
-    matrix = np.random.random(n,n)
-    b = np.random.random(n,1)
+    matrix = np.random.rand(n,n)
+    b = np.random.rand(n)
     return matrix, b
