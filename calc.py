@@ -2,7 +2,6 @@ import LU
 import Generate
 import numpy as np
 
-#matrix, b = Generate.Generate(5)
 matrix = np.ones(5,5)
 b = np.array([1,2,3,4,5], dtype=float)
 print("matrix:")
