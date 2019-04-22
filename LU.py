@@ -3,7 +3,8 @@ import math
 
 class LU:
 
-    def __init__(self, C, b):
+    def __init__(self, matrix, b):
+        C = matrix.copy()
         n = len(C)
         P = np.eye(n)
         for i in range(n):
@@ -32,30 +33,41 @@ class LU:
         return det
 
     def solve(self):
-        solution = -self.b
-        for i in range(2, len(solution)+1):
-            for j in range(0, len(solution)):
-                solution[len(solution)-i] -= solution[j]*(np.tril(self.C,-1)+np.eye(len(self.C)))[j][i-2]
-        return solution
+        y = self.b.copy()
+        for i in range(1, len(y)):
+            for j in range(i):
+                y[i] -= y[j]*(np.tril(self.C,-1)+np.eye(len(self.C)))[i][j]
+        x = y.copy()
+        x[len(y)-1] /= np.triu(self.C)[len(y)-1][len(y)-1]
+        for i in range(len(y)-2, -1, -1):
+            for j in range(len(y)-1, i, -1):
+                x[i] -= x[j]*(np.triu(self.C))[i][j]
+            x[i] /= np.triu(self.C)[i][i]
+        return x
 
-    def show(self):
-        print(np.tril(self.C,-1)+np.eye(len(self.C)))
-        print()
-        print(np.triu(self.C))
-        print()
-        print(self.P)
-        print()
-        print(self.b)
-        print()
+    def inverse(self):
+        LU = np.dot(np.tril(self.C,-1) + np.eye(len(self.C)), np.triu(self.C))
+        inversion = []
+        for i in range(len(LU)):
+            b = [0 for k in range(len(LU))]
+            b[i] = 1
+            inversion.append(np.linalg.solve(LU, b))
+        inversion = np.transpose(inversion)
+        return inversion
 
     def cond(self):
-        x = self.solve()
+        LU = np.dot(np.tril(self.C, 1) + np.eye(len(self.C)), np.triu(self.C))
+        inversion = self.inverse()
+        condition = np.linalg.norm(inversion) * np.linalg.norm(LU)
+        return condition
 
-
-def swap(matrix, P, b, i):
-    n = len(matrix)
-    x = np.argmax([math.fabs(matrix[row][i]) for row in range(i, n)])
-    matrix[[0, x]] = matrix[[x, 0]]
-    P[[0, x]] = P[[x, 0]]
-    b[0], b[x] = b[x], b[0]
-    return matrix, P, b
+    def show(self):
+        print("L: ")
+        print(np.tril(self.C,-1)+np.eye(len(self.C)))
+        print("U: ")
+        print(np.triu(self.C))
+        print("P: ")
+        print(self.P)
+        print("b: ")
+        print(self.b)
+        print()
