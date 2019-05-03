@@ -1,4 +1,5 @@
 import numpy as np
+import math
 import random
 
 def Generate(n, q):
@@ -8,7 +9,7 @@ def Generate(n, q):
         matrix[i][i] = 0
         for j in range(n):
             if i != j:
-                matrix[i][i] += matrix[i][j]
+                matrix[i][i] += math.fabs(matrix[i][j])
         matrix[i][i] *= q
-        matrix[i][i] *= random.paretovariate(1)
+        #matrix[i][i] *= random.paretovariate(1)
     return matrix, b
