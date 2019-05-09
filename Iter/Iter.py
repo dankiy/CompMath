@@ -25,7 +25,7 @@ def Jacobi(A, b, eps):
     steps = 0
     n = len(A)
     tempX = [0.0 for i in range(n)]
-    x = [4.0 for i in range(n)]
+    x = [0.0 for i in range(n)]
     norm = eps + 1
 
     while norm > eps:

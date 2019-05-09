@@ -2,30 +2,30 @@ import numpy as np
 from math import sin, cos, sinh, cosh, exp, pow
 
 def __func1(x: np.array) -> float:
-    -(cos(x[0] * x[1]) - exp(-3 * x[2]) + x[3] * pow(x[4], 2) - x[5] - sinh(2 * x[7]) * x[8] + 2 * x[
+    return -(cos(x[0] * x[1]) - exp(-3 * x[2]) + x[3] * pow(x[4], 2) - x[5] - sinh(2 * x[7]) * x[8] + 2 * x[
         9] + 2.0004339741653854440)
 def __func2(x: np.array) -> float:
-    -(sin(x[0] * x[1]) + x[2] * x[8] * x[6] - exp(-x[9] + x[5]) + 3 * pow(x[4], 2) - x[5] * (
+    return -(sin(x[0] * x[1]) + x[2] * x[8] * x[6] - exp(-x[9] + x[5]) + 3 * pow(x[4], 2) - x[5] * (
                 x[7] + 1) + 10.886272036407019994)
 def __func3(x: np.array) -> float:
-    -(x[0] - x[1] + x[2] - x[3] + x[4] - x[5] + x[6] - x[7] + x[8] - x[9] - 3.1361904761904761904)
+    return -(x[0] - x[1] + x[2] - x[3] + x[4] - x[5] + x[6] - x[7] + x[8] - x[9] - 3.1361904761904761904)
 def __func4(x: np.array) -> float:
-    -(2 * cos(-x[8] + x[3]) + x[4] / (x[2] + x[0]) - sin(x[1] * x[1]) + pow(cos(x[6] * x[9]), 2) - x[
+    return -(2 * cos(-x[8] + x[3]) + x[4] / (x[2] + x[0]) - sin(x[1] * x[1]) + pow(cos(x[6] * x[9]), 2) - x[
         7] - 0.1707472705022304757)
 def __func5(x: np.array) -> float:
-    -(sin(x[4]) + 2 * x[7] * (x[2] + x[0]) - exp(-x[6] * (-x[9] + x[5])) + 2 * cos(x[1]) - 1 / (
+    return -(sin(x[4]) + 2 * x[7] * (x[2] + x[0]) - exp(-x[6] * (-x[9] + x[5])) + 2 * cos(x[1]) - 1 / (
                 x[3] - x[8]) - 0.368589627310127786)
 def __func6(x: np.array) -> float:
-    -(exp(x[0] - x[3] - x[8]) + x[4] * x[4] / x[7] + 0.5 * cos(3 * x[9] * x[1]) - x[5] * x[2] + 2.049108601677187511)
+    return -(exp(x[0] - x[3] - x[8]) + x[4] * x[4] / x[7] + 0.5 * cos(3 * x[9] * x[1]) - x[5] * x[2] + 2.049108601677187511)
 def __func7(x: np.array) -> float:
-    -x[1] * x[1] * x[1] * x[6] - (-sin(x[9] / x[4] + x[7]) + (x[0] - x[5]) * cos(x[3]) + x[2] - 0.738043007620279801)
+    return -x[1] * x[1] * x[1] * x[6] - (-sin(x[9] / x[4] + x[7]) + (x[0] - x[5]) * cos(x[3]) + x[2] - 0.738043007620279801)
 def __func8(x: np.array) -> float:
-    -(x[4] * pow(x[0] - 2 * x[5], 2) - 2 * sin(-x[8] + x[2]) + 1.5 * x[3] - exp(
+    return -(x[4] * pow(x[0] - 2 * x[5], 2) - 2 * sin(-x[8] + x[2]) + 1.5 * x[3] - exp(
         x[1] * x[6] + x[9]) + 3.566832198969380904)
 def __func9(x: np.array) -> float:
-    -(7 / x[5] + exp(x[4] + x[3]) - 2 * x[1] * x[7] * x[9] * x[6] + 3 * x[8] - 3 * x[0] - 8.439473450838325749)
+    return -(7 / x[5] + exp(x[4] + x[3]) - 2 * x[1] * x[7] * x[9] * x[6] + 3 * x[8] - 3 * x[0] - 8.439473450838325749)
 def __func10(x: np.array) -> float:
-    -(x[9] * x[0] + x[8] * x[1] - x[7] * x[2] + sin(x[3] + x[4] + x[5]) * x[6] - 0.7823809523809523809)
+    return -(x[9] * x[0] + x[8] * x[1] - x[7] * x[2] + sin(x[3] + x[4] + x[5]) * x[6] - 0.7823809523809523809)
 
 funcSystem = [__func1, __func2, __func3, __func4, __func5, __func6, __func7, __func8, __func9, __func10]
 
