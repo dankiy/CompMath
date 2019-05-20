@@ -59,12 +59,9 @@ def CPIh(f, a, b, h):
 def NPI(f, x0, x1, a = 2.5, b = 3.3):
     x = np.array([x0, (x0 + x1) / 2, x1])
     X = np.array([[xj ** s for xj in x] for s in range(len(x))])
-    #print(X)
     m = np.array([mu(x0, x1, j) for j in range(len(x))])
-    #print(m)
     luX = LU.LU(X, m)
     A = luX.solve()
-    #print(A)
     result = sum([A[j] * f(x[j]) for j in range(len(x))])
     return result
 
