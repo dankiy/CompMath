@@ -6,38 +6,36 @@ from math import log, acos, cos, pi
 #   a = 1.5, b = 3.3, alpha = 1/3, beta = 0
 
 np.set_printoptions(suppress = True)
-def ACPI(f, a, b, eps, opt: bool):
+def ACPI(f, a, b, eps, opt: bool, gauss = False):
     L = 2
     h1 = 1
     h2 = h1 / L
     h3 = h2 / L
     if opt:
-        S1 = CPIh(f, a, b, h1)
-        S2 = CPIh(f, a, b, h2)
-        S3 = CPIh(f, a, b, h3)
+        S1 = CPIh(f, a, b, h1, gauss)
+        S2 = CPIh(f, a, b, h2, gauss)
+        S3 = CPIh(f, a, b, h3, gauss)
         m = Atkin(S1, S2, S3, L)
-        h1 = h1 * ( ( eps * (1 - L ** (-m)) / (S2 - S1) )  ** (1 / m) )
+        h1 = h1 * ( ( eps * (1 - L ** (-m)) / abs(S2 - S1) )  ** (1 / m) )
         h2 = h1 / L
         h3 = h2 / L
-        print(h1)
+        print("hopt = " + str(h1))
     R = 2 * eps
     while R > eps:
-        S1 = CPIh(f, a, b, h1)
-        S2 = CPIh(f, a, b, h2)
-        S3 = CPIh(f, a, b, h3)
-        #print("value: " + str(S3))
+        S1 = CPIh(f, a, b, h1, gauss)
+        S2 = CPIh(f, a, b, h2, gauss)
+        S3 = CPIh(f, a, b, h3, gauss)
         m = Atkin(S1, S2, S3, L)
         R = Richardson(S1, S2, L, m) #Richardson
-        #print("R: " + str(R))
         h1 = h2
         h2 = h3
         h3 = h3 / L
 
     result = S3
+
     return result
 
 def Atkin(S1, S2, S3, L):
-    #print((S3 - S2) / (S2 - S1))
     m = -log((S3 - S2) / (S2 - S1)) / (log(L))
     return m
 
@@ -45,54 +43,47 @@ def Richardson(S1, S2, L, m):
     R = (S2 - S1) / (1 - L ** (-m))
     return R
 
-def CPI(f, a, b, steps):
+def CPI(f, a, b, steps, gauss = False):
+    PI = GPI if gauss else NPI
     h = (b - a) / steps
     intervals = [(a + h * i, a + h * (i + 1)) for i in range(steps)]
-    result = sum([NPI(f, x[0], x[1]) for x in intervals])
+    result = sum([PI(f, x[0], x[1]) for x in intervals])
+
     return result
 
-def CPIh(f, a, b, h):
+def CPIh(f, a, b, h, gauss = False):
+    PI = GPI if gauss else NPI
     intervals = []
     i = 0
     while a + i * h < b:
         next = a + (i + 1) * h
         intervals.append((a + i * h, next if next < b else b))
         i += 1
-    result = sum([NPI(f, x[0], x[1]) for x in intervals])
+    result = sum([PI(f, x[0], x[1]) for x in intervals])
+
     return result
 
 def NPI(f, x0, x1, a = 1.5, b = 3.3):
     n = 3
     x = np.array([x0, (x0 + x1) / 2, x1])
     X = np.array([[xj ** s for xj in x] for s in range(n)])
-
     m = np.array([mu(x0, x1, s) for s in range(n)])
-    luX = LU.LU(X, m)
-    A = luX.solve()
-    #print(X)
-    #print(m)
     A = np.linalg.solve(X, m)
-    #print(A)
     result = sum([A[j] * f(x[j]) for j in range(n)])
+
     return result
 
 def GPI(f, x0, x1, a = 1.5, b = 3.3):
     n = 3
     m = np.array([mu(x0, x1, s) for s in range(2 * n)])
-    mmu = np.array([-m[i] for i in range(n)])
+    mmu = np.array([-m[i] for i in range(n, 2 * n)])
     M = np.array([m[i:n+i] for i in range(n)])
-    luM = LU.LU(M, mmu)
-    k = luM.solve()
+    k = np.linalg.solve(M, mmu)
     x = np.array(Kardano(k))
-    #print(x)
     X = np.array([[xj ** s for xj in x] for s in range(n)])
-    #print(X)
-    #print(m[:n])
-    luX = LU.LU(X, m[:n])
-    #luX.show()
-    A = luX.solve()
-    #print(A)
+    A = np.linalg.solve(X, m[:n])
     result = sum([A[j] * f(x[j]) for j in range(n)])
+
     return result
 
 def Kardano(k):
