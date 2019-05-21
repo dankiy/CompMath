@@ -7,6 +7,7 @@ class LU:
         C = matrix.copy()
         n = len(C)
         P = np.eye(n)
+        b = b.copy()
         for i in range(n):
             pivotValue = 0
             pivot = -1

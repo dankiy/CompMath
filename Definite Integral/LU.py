@@ -7,6 +7,7 @@ class LU:
         C = matrix.copy()
         n = len(C)
         P = np.eye(n)
+        b = b.copy()
         for i in range(n):
             pivotValue = 0
             pivot = -1
@@ -64,6 +65,7 @@ class LU:
         return condition
 
     def show(self):
+        np.set_printoptions(suppress=True)
         print("L: ")
         print(np.tril(self.C,-1)+np.eye(len(self.C)))
         print("U: ")
